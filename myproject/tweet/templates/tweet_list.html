@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  TweetBar
+{% endblock %}
+
+{% block content %}
+  <h1 class="mt-4">Welcome to TweetBar's Tweets</h1>
+
+  <a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create a Tweet</a>
+
+  <div class="container">
+    <div class="row g-4">
+      {% for tweet in tweets %}
+        <div class="col-md-4">
+          <div class="card h-100">
+            {% if tweet.photo %}
+              <img src="{{ tweet.photo.url }}" class="card-img-top img-fluid" style="max-height: 250px; object-fit: cover" alt="Tweet Image" />
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ tweet.user.username }}</h5>
+              <p class="card-text">{{ tweet.text }}</p>
+              {% if tweet.user == user %}
+              <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary me-2">Edit</a>
+              <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No tweets to show.</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

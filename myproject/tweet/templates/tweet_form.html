@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  TweetBar
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="mb-4">Welcome to TweetBar's Tweets</h1>
+
+    <h2 class="mb-4">
+      {% if form.instance.pk %}
+        Edit Tweet
+      {% else %}
+        Create Tweet
+      {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data" class="mb-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-warning" type="submit">Submit</button>
+      <a href="{% url 'tweet_list' %}" class="btn btn-secondary ms-3">Go to Tweet List</a>
+    </form>
+  </div>
+{% endblock %}
